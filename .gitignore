@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+.DS_Store
+
+playwright_session/
+playwright_data/
+
+albanian_recordings/
+processed_dataset/
+
+*.pth
