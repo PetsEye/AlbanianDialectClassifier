@@ -43,6 +43,25 @@ python visualize_dialects.py
 
 To predict a whole folder, pass the folder instead of a file.
 
+## Try it on your own voice
+
+1. Record 10–30 seconds of yourself speaking your dialect in a quiet room. Voice Memos on a phone works.
+2. Convert it to mono 16 kHz WAV (needs `ffmpeg`, e.g. `brew install ffmpeg`):
+   ```bash
+   ffmpeg -i my_voice.m4a -ac 1 -ar 16000 my_voice.wav
+   ```
+3. Cut it into 5-second pieces, since the model was trained on chunks that long:
+   ```bash
+   mkdir my_chunks
+   ffmpeg -i my_voice.wav -f segment -segment_time 5 -c copy my_chunks/chunk_%03d.wav
+   ```
+4. Predict on the folder:
+   ```bash
+   python predict.py my_chunks
+   ```
+
+If most chunks give the same answer, that's the overall guess. Treat it as a rough check, not a verdict: the model was trained on old interview recordings, so a phone recording can score differently for reasons that have nothing to do with dialect.
+
 ## Results
 
 With the current data (200 speakers, 135 Gheg and 65 Tosk):
